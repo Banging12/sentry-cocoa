@@ -50,10 +50,20 @@ class ViewController: UIViewController {
     }
     
     @IBAction func captureMessage(_ sender: Any) {        
-        let eventId = SentrySDK.capture(message: "Yeah captured a message")
-        // Returns eventId in case of successfull processed event
-        // otherwise nil
-        print("\(String(describing: eventId))")
+var i = 0
+
+dispatchQueue.async {
+    for _ in 0...1_000_000 {
+        for _ in 0...1_000 {
+            i += Int.random(in: 0...10)
+            i -= 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.dsnTextField.text = "Count to \(i)"
+            }
+        }
+    }
+}
     }
     
     @IBAction func captureUserFeedback(_ sender: Any) {
